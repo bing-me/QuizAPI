@@ -8,10 +8,10 @@ namespace QuizAPI.Models
         [Key]
         public int ParticipantId { get; set; }
 
-        [Column(TypeName = "navchar(50)")]
+        [Column(TypeName = "nvarchar(50)")]
         public string Email { get; set; }
 
-        [Column(TypeName = "navchar(50)")]
+        [Column(TypeName = "nvarchar(50)")]
         public string Name { get; set; }
 
         public int Score { get; set; }
