@@ -53,17 +53,17 @@ namespace QuizAPI.Controllers
         // PUT: api/Participant/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutParticipant(int id, ParticipantResult _participantResult)
+        public async Task<IActionResult> PutParticipant(int id, ParticipantResult participantResult)
         {
-            if (id != _participantResult.ParticipantId)
+            if (id != participantResult.ParticipantId)
             {
                 return BadRequest();
             }
 
             // get all current details of the record, then update with quiz results
             Participant participant = _context.Participants.Find(id);
-            participant.Score = _participantResult.Score;
-            participant.TimeTaken = _participantResult.TimeTaken;
+            participant.Score = participantResult.Score;
+            participant.TimeTaken = participantResult.TimeTaken;
 
             _context.Entry(participant).State = EntityState.Modified;
 
@@ -124,6 +124,27 @@ namespace QuizAPI.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        // GET: api/leaderboard
+        [HttpGet("leaderboard")]
+        public async Task<ActionResult<IEnumerable<Participant>>> GetLeaderboard()
+        {
+            var participants = await _context.Participants
+                .OrderByDescending(p => p.Score)
+                .Select(p => new {
+                    p.Name,
+                    p.Score,
+                    p.TimeTaken
+                })
+                .ToListAsync();
+
+            if (participants == null || participants.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(participants);
         }
 
         private bool ParticipantExists(int id)
