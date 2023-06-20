@@ -132,6 +132,7 @@ namespace QuizAPI.Controllers
         {
             var participants = await _context.Participants
                 .OrderByDescending(p => p.Score)
+                .ThenBy(p => p.TimeTaken)
                 .Select(p => new {
                     p.Name,
                     p.Score,
