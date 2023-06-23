@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/moviequizapi2023/apis/moviequizapi",
+      "type": "apis.azure"
+    },
+    "mssql1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/moviequizqpi/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsCONNECTION_6B21916F32",
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/moviequizdb/databases/moviequizdb",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:CONNECTION",
+      "dynamicId": null
+    }
+  }
+}

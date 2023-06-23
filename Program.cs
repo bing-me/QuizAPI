@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using QuizAPI.Models;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,10 +12,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Production
 DotNetEnv.Env.Load();
-
 builder.Services.AddDbContext<QuizDbContext>(options =>
 options.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION")));
+
+// dev connection
+//builder.Services.AddDbContext<QuizDbContext>(options =>
+//{
+    //options.UseSqlServer(builder.Configuration.GetConnectionString("CONNECTION"));
+//});
 
 var app = builder.Build();
 
@@ -23,22 +30,29 @@ options.WithOrigins("http://localhost:3000")
     .AllowAnyMethod()
     .AllowAnyHeader());
 
-app.UseStaticFiles(new StaticFileOptions
+/*app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
         Path.Combine(builder.Environment.ContentRootPath, "Images")),
     RequestPath = "/Images"
-});
+});*/
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI();
+/* to hit the defaults page */
+//app.UseDefaultFiles();
+
+//app.UseStaticFiles();
+
+//app.UseRouting();
 
 /*app.UseHttpsRedirection();*/
-
 app.UseAuthorization();
 
 app.MapControllers();
