@@ -13,20 +13,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Production
-DotNetEnv.Env.Load();
-builder.Services.AddDbContext<QuizDbContext>(options =>
-options.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION")));
-
-// dev connection
+//DotNetEnv.Env.Load();
 //builder.Services.AddDbContext<QuizDbContext>(options =>
-//{
-    //options.UseSqlServer(builder.Configuration.GetConnectionString("CONNECTION"));
-//});
+//options.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION")));
+
+//dev connection
+builder.Services.AddDbContext<QuizDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CONNECTION"));
+});
 
 var app = builder.Build();
 
 app.UseCors(options =>
-options.WithOrigins("http://localhost:3000")
+options.WithOrigins("https://moviequizfront.azurewebsites.net/")
     .AllowAnyMethod()
     .AllowAnyHeader());
 
