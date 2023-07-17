@@ -23,16 +23,16 @@ From the captivating 1970s to the exhilarating 2010s, this quiz takes you on a j
 
 ##### Login page
 
-I will explain each of the sections as one would enounter them in the flow of the user. Here, users will be asked on login, this is however a 2-in-1 where they can both create an account or login if their account already exists. It will use the post method from the Participants Controller
+I will explain each of the sections as one would encounter them in the flow of the user. Here, users will be asked to log in, this is however a 2-in-1 where they can both create an account or log in if their account already exists. It will use the post method from the Participants Controller
 
 POST: api/Participant - This route adds a new participant to the quiz. It receives the participant details in the participant parameter. The route checks if a participant with the same name and email already exists in the Participants table. If not, it adds the participant to the table and saves the changes to the database using SaveChangesAsync. If a participant with the same name and email exists, it assigns the existing participant to the participant variable. Finally, it returns an Ok() result with the added or existing participant.
 
-Note that participants was not scaffolded into the .NET backend as that would create a lot of excess code in terms of logging in, registering and security. A more minimal approach was choosen as we only need the usernames for a leaderboard.
+Note that participants were not scaffolded into the .NET backend as that would create a lot of excess code in terms of logging in, registering, and security. A more minimal approach was chosen as we only need the usernames for a leaderboard.
 
 
 ##### Quiz page
 
-The user will be directed next to the quiz page, here we have the user acknowledge that he will begin the quiz by clicking the button. The button will start a timer which measures the time taken to complete the quiz and call on the get method from the Questions controller.
+The user will be directed next to the quiz page, here we have the user acknowledge that he will begin the quiz by clicking the button. The button will start a timer that measures the time taken to complete the quiz and call on the get method from the Questions controller.
 
 GET: api/Questions - This route retrieves a list of random questions for the quiz. It selects a random set of five questions from the Questions table in the QuizDbContext. Each question is represented as an anonymous type with properties for QnId (question ID), QnInWords (question in words), ImageName (image name, if applicable), and Options (an array of four options). The selected questions are returned as an Ok() result.
 
@@ -50,7 +50,7 @@ PUT: api/Participant/5 - This route updates a specific participant's details, su
 
 ##### Leaderboard page
 
-All scores can be view on the leaderboard which call the leaderboard method from the Participants controller.
+All scores can be viewed on the leaderboard which calls the leaderboard method from the Participants controller.
 
 GET: api/leaderboard - This route retrieves a leaderboard of participants ranked by their quiz score and time taken. It queries the Participants table, orders the participants in descending order by score and ascending order by time taken, and selects the participant's name, score, and time taken. The result is returned as an anonymous type list of objects. If no participants are found or the list is empty, it returns a NotFound() result. Otherwise, it returns an Ok() result with the leaderboard data.
 
